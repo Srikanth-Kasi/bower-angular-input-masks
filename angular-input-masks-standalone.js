@@ -4650,12 +4650,12 @@ function PercentageMaskDirective($locale, $parse, PreFormatters, NumberMasks) {
 				var valueToFormat = PreFormatters.clearDelimitersAndLeadingZeros(value) || '0';
 				if (value.length > 0 && value.indexOf('%') === -1 && !bWasEmpty) {
 					valueToFormat = (value.length === 1) ? 0 : valueToFormat.slice(0, valueToFormat.length - 1);
+					valueToFormat = (valueToFormat !='0') ? valueToFormat : null;
 				}
 
 				bWasEmpty = false;
-				var formatedValue = viewMask.apply(valueToFormat) + ' %';
+				var formatedValue = (valueToFormat != null) ? (viewMask.apply(valueToFormat) + ' %') : valueToFormat;
 				var actualNumber = parseFloat(modelMask.apply(valueToFormat));
-				actualNumber = (isNaN(actualNumber)) ? 0 : actualNumber;
 
 				if (ctrl.$viewValue !== formatedValue) {
 					ctrl.$setViewValue(formatedValue);
